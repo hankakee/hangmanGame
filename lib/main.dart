@@ -16,6 +16,10 @@ String moChwazi = "";
 String infoChwazi = "";
 String rechechMo = "";
 String thisletter = "";
+
+String winning = "";
+String losing = "";
+
 List<String> lisMoJweDeja = [];
 List mo = [
   {
@@ -25,21 +29,21 @@ List mo = [
   {
     "tem": ["LEKOL", "Youn nan pi bon kote ki ka enstwi moun..."],
     "info": [
-      "LEKOL se youn nan kote ki ka enstwi moun...",
+      "Wi LEKOL se youn nan kote ki ka enstwi moun...",
       "Domaj mo sa te komanse a L..."
     ]
   },
   // {
   //   "tem": ["SOULYE", "Itil pou proteje pye'w..."],
-  //   "info": ["Itil pou proteje pye'w...", "Domaj mo sa te komanse a L..."]
+  //   "info": ["Wi soulye Itil pou proteje pye'w...", "Domaj mo sa te komanse a L..."]
   // },
   // {
   //   "tem": ["LAJAN", "Echanjab pou preske tout bagay"],
-  //   "info": ["Echanjab pou preske tout bagay...", "Domaj mo sa te komanse a L..."]
+  //   "info": ["Wi lajan echanjab pou preske tout bagay...", "Domaj mo sa te komanse a L..."]
   // },
   // {
   //   "tem": ["LEGIM", "Ka akonpaye preske tout manje..."],
-  //   "info": ["Ka akonpaye preske tout manje...", "Domaj mo sa te komanse a L..."]
+  //   "info": ["Wi LEGIM ka akonpaye preske tout manje...", "Domaj mo sa te komanse a L..."]
   // }
 ];
 
@@ -60,6 +64,8 @@ class _HangmanState extends State<Hangman> {
     moChwazi = fraz.split("&")[0];
     infoChwazi = fraz.split("&")[1];
     rechechMo = fraz.split("&")[2];
+    losing = fraz.split("&")[4];
+    winning = fraz.split("&")[3];
   }
 
   Widget touche(String lt, callback, bool freeze, int lives) {
@@ -159,6 +165,8 @@ class _HangmanState extends State<Hangman> {
                       moChwazi = fraz.split("&")[0];
                       infoChwazi = fraz.split("&")[1];
                       rechechMo = fraz.split("&")[2];
+                      winning = fraz.split("&")[3];
+                      losing = fraz.split("&")[4];
                     });
                   },
                   title: const Text(
@@ -201,15 +209,18 @@ class _HangmanState extends State<Hangman> {
                     style: const TextStyle(fontSize: 35.0),
                     textAlign: TextAlign.center,
                   ),
-                  // Container(
-                  //   child: ElevatedButton(
-                  //     child: Text("Bor"),
-                  //     onPressed: () {
-                  //       setState(() => {lives -= 1});
-                  //       print(lives);
-                  //     },
-                  //   ),
-                  // ),
+                  Container(
+                    child: ElevatedButton(
+                      child: Text("Bor"),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const EnfoScreen(statusInfo: "winner")));
+                      },
+                    ),
+                  ),
                   Container(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: Text(infoChwazi)),
@@ -282,400 +293,70 @@ class _HangmanState extends State<Hangman> {
                     touche(
                         shift ? 'Q' : 'q',
                         () => {
-                              setState(() => freezeBtn = true),
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => freezeBtn = false);
-                              }),
-                              mlor =
-                                  ParseText(moChwazi, rechechMo, "Q", context),
-                              statusTyping = mlor.split("&")[1],
-                              mlor = mlor.split("&")[0],
-                              print("men mlor:" + mlor),
-                              moChwazi = mlor,
-                              setState(() => {
-                                    moChwazi = mlor,
-                                  }),
-                              if (statusTyping == 'f')
-                                {
-                                  if (lives > 1)
-                                    {
-                                      Timer(const Duration(seconds: 1), () {
-                                        setState(() => {
-                                              statusTyping = 'a',
-                                              lives--,
-                                            });
-                                      }),
-                                    }
-                                  else
-                                    {
-                                      lives = 0,
-                                      pedi(context),
-                                    }
-                                }
-                              else if (statusTyping == 't')
-                                Timer(const Duration(seconds: 1), () {
-                                  setState(() => statusTyping = 'a');
-                                }),
+                              puppetMaster("Q", context),
                             },
                         freezeBtn,
                         lives),
                     touche(
                         shift ? 'W' : 'w',
                         () => {
-                              setState(() => freezeBtn = true),
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => freezeBtn = false);
-                              }),
-                              mlor =
-                                  ParseText(moChwazi, rechechMo, "W", context),
-                              statusTyping = mlor.split("&")[1],
-                              mlor = mlor.split("&")[0],
-                              print("men mlor:" + mlor),
-                              moChwazi = mlor,
-                              setState(() => {
-                                    moChwazi = mlor,
-                                  }),
-                              if (statusTyping == 'f')
-                                {
-                                  if (lives > 1)
-                                    {
-                                      Timer(const Duration(seconds: 1), () {
-                                        setState(() => {
-                                              statusTyping = 'a',
-                                              lives--,
-                                            });
-                                      }),
-                                    }
-                                  else
-                                    {
-                                      lives = 0,
-                                      pedi(context),
-                                    }
-                                }
-                              else if (statusTyping == 't')
-                                Timer(const Duration(seconds: 1), () {
-                                  setState(() => statusTyping = 'a');
-                                }),
+                              puppetMaster("W", context),
                             },
                         freezeBtn,
                         lives),
                     touche(
                         shift ? 'E' : 'e',
                         () => {
-                              setState(() => freezeBtn = true),
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => freezeBtn = false);
-                              }),
-                              mlor =
-                                  ParseText(moChwazi, rechechMo, "E", context),
-                              statusTyping = mlor.split("&")[1],
-                              mlor = mlor.split("&")[0],
-                              print("men mlor:" + mlor),
-                              moChwazi = mlor,
-                              setState(() => {
-                                    moChwazi = mlor,
-                                  }),
-                              if (statusTyping == 'f')
-                                {
-                                  if (lives > 1)
-                                    {
-                                      Timer(const Duration(seconds: 1), () {
-                                        setState(() => {
-                                              statusTyping = 'a',
-                                              lives--,
-                                            });
-                                      }),
-                                    }
-                                  else
-                                    {
-                                      lives = 0,
-                                      pedi(context),
-                                    }
-                                }
-                              else if (statusTyping == 't')
-                                Timer(const Duration(seconds: 1), () {
-                                  setState(() => statusTyping = 'a');
-                                }),
+                              puppetMaster("E", context),
                             },
                         freezeBtn,
                         lives),
                     touche(
                         shift ? 'R' : 'r',
                         () => {
-                              setState(() => freezeBtn = true),
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => freezeBtn = false);
-                              }),
-                              mlor =
-                                  ParseText(moChwazi, rechechMo, "R", context),
-                              statusTyping = mlor.split("&")[1],
-                              mlor = mlor.split("&")[0],
-                              print("men mlor:" + mlor),
-                              moChwazi = mlor,
-                              setState(() => {
-                                    moChwazi = mlor,
-                                  }),
-                              if (statusTyping == 'f')
-                                {
-                                  if (lives > 1)
-                                    {
-                                      Timer(const Duration(seconds: 1), () {
-                                        setState(() => {
-                                              statusTyping = 'a',
-                                              lives--,
-                                            });
-                                      }),
-                                    }
-                                  else
-                                    {
-                                      lives = 0,
-                                      pedi(context),
-                                    }
-                                }
-                              else if (statusTyping == 't')
-                                Timer(const Duration(seconds: 1), () {
-                                  setState(() => statusTyping = 'a');
-                                }),
+                              puppetMaster("R", context),
                             },
                         freezeBtn,
                         lives),
                     touche(
                         shift ? 'T' : 't',
                         () => {
-                              setState(() => freezeBtn = true),
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => freezeBtn = false);
-                              }),
-                              mlor =
-                                  ParseText(moChwazi, rechechMo, "T", context),
-                              statusTyping = mlor.split("&")[1],
-                              mlor = mlor.split("&")[0],
-                              print("men mlor:" + mlor),
-                              moChwazi = mlor,
-                              setState(() => {
-                                    moChwazi = mlor,
-                                  }),
-                              if (statusTyping == 'f')
-                                {
-                                  if (lives > 1)
-                                    {
-                                      Timer(const Duration(seconds: 1), () {
-                                        setState(() => {
-                                              statusTyping = 'a',
-                                              lives--,
-                                            });
-                                      }),
-                                    }
-                                  else
-                                    {
-                                      lives = 0,
-                                      pedi(context),
-                                    }
-                                }
-                              else if (statusTyping == 't')
-                                Timer(const Duration(seconds: 1), () {
-                                  setState(() => statusTyping = 'a');
-                                }),
+                              puppetMaster("T", context),
                             },
                         freezeBtn,
                         lives),
                     touche(
                         shift ? 'Y' : 'y',
                         () => {
-                              setState(() => freezeBtn = true),
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => freezeBtn = false);
-                              }),
-                              mlor =
-                                  ParseText(moChwazi, rechechMo, "Y", context),
-                              statusTyping = mlor.split("&")[1],
-                              mlor = mlor.split("&")[0],
-                              print("men mlor:" + mlor),
-                              moChwazi = mlor,
-                              setState(() => {
-                                    moChwazi = mlor,
-                                  }),
-                              if (statusTyping == 'f')
-                                {
-                                  if (lives > 1)
-                                    {
-                                      Timer(const Duration(seconds: 1), () {
-                                        setState(() => {
-                                              statusTyping = 'a',
-                                              lives--,
-                                            });
-                                      }),
-                                    }
-                                  else
-                                    {
-                                      lives = 0,
-                                      pedi(context),
-                                    }
-                                }
-                              else if (statusTyping == 't')
-                                Timer(const Duration(seconds: 1), () {
-                                  setState(() => statusTyping = 'a');
-                                }),
+                              puppetMaster("Y", context),
                             },
                         freezeBtn,
                         lives),
                     touche(
                         shift ? 'U' : 'u',
                         () => {
-                              setState(() => freezeBtn = true),
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => freezeBtn = false);
-                              }),
-                              mlor =
-                                  ParseText(moChwazi, rechechMo, "U", context),
-                              statusTyping = mlor.split("&")[1],
-                              mlor = mlor.split("&")[0],
-                              print("men mlor:" + mlor),
-                              moChwazi = mlor,
-                              setState(() => {
-                                    moChwazi = mlor,
-                                  }),
-                              if (statusTyping == 'f')
-                                {
-                                  if (lives > 1)
-                                    {
-                                      Timer(const Duration(seconds: 1), () {
-                                        setState(() => {
-                                              statusTyping = 'a',
-                                              lives--,
-                                            });
-                                      }),
-                                    }
-                                  else
-                                    {
-                                      lives = 0,
-                                      pedi(context),
-                                    }
-                                }
-                              else if (statusTyping == 't')
-                                Timer(const Duration(seconds: 1), () {
-                                  setState(() => statusTyping = 'a');
-                                }),
+                              puppetMaster("U", context),
                             },
                         freezeBtn,
                         lives),
                     touche(
                         shift ? 'I' : 'i',
                         () => {
-                              setState(() => freezeBtn = true),
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => freezeBtn = false);
-                              }),
-                              mlor =
-                                  ParseText(moChwazi, rechechMo, "I", context),
-                              statusTyping = mlor.split("&")[1],
-                              mlor = mlor.split("&")[0],
-                              print("men mlor:" + mlor),
-                              moChwazi = mlor,
-                              setState(() => {
-                                    moChwazi = mlor,
-                                  }),
-                              if (statusTyping == 'f')
-                                {
-                                  if (lives > 1)
-                                    {
-                                      Timer(const Duration(seconds: 1), () {
-                                        setState(() => {
-                                              statusTyping = 'a',
-                                              lives--,
-                                            });
-                                      }),
-                                    }
-                                  else
-                                    {
-                                      lives = 0,
-                                      pedi(context),
-                                    }
-                                }
-                              else if (statusTyping == 't')
-                                Timer(const Duration(seconds: 1), () {
-                                  setState(() => statusTyping = 'a');
-                                }),
+                              puppetMaster("I", context),
                             },
                         freezeBtn,
                         lives),
                     touche(
                         shift ? 'O' : 'o',
                         () => {
-                              setState(() => freezeBtn = true),
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => freezeBtn = false);
-                              }),
-                              mlor =
-                                  ParseText(moChwazi, rechechMo, "O", context),
-                              statusTyping = mlor.split("&")[1],
-                              mlor = mlor.split("&")[0],
-                              print("men mlor:" + mlor),
-                              moChwazi = mlor,
-                              setState(() => {
-                                    moChwazi = mlor,
-                                  }),
-                              if (statusTyping == 'f')
-                                {
-                                  if (lives > 1)
-                                    {
-                                      Timer(const Duration(seconds: 1), () {
-                                        setState(() => {
-                                              statusTyping = 'a',
-                                              lives--,
-                                            });
-                                      }),
-                                    }
-                                  else
-                                    {
-                                      lives = 0,
-                                      pedi(context),
-                                    }
-                                }
-                              else if (statusTyping == 't')
-                                Timer(const Duration(seconds: 1), () {
-                                  setState(() => statusTyping = 'a');
-                                }),
+                              puppetMaster("O", context),
                             },
                         freezeBtn,
                         lives),
                     touche(
                         shift ? 'P' : 'p',
                         () => {
-                              setState(() => freezeBtn = true),
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => freezeBtn = false);
-                              }),
-                              mlor =
-                                  ParseText(moChwazi, rechechMo, "P", context),
-                              statusTyping = mlor.split("&")[1],
-                              mlor = mlor.split("&")[0],
-                              print("men mlor:" + mlor),
-                              moChwazi = mlor,
-                              setState(() => {
-                                    moChwazi = mlor,
-                                  }),
-                              if (statusTyping == 'f')
-                                {
-                                  if (lives > 1)
-                                    {
-                                      Timer(const Duration(seconds: 1), () {
-                                        setState(() => {
-                                              statusTyping = 'a',
-                                              lives--,
-                                            });
-                                      }),
-                                    }
-                                  else
-                                    {
-                                      lives = 0,
-                                      pedi(context),
-                                    }
-                                }
-                              else if (statusTyping == 't')
-                                Timer(const Duration(seconds: 1), () {
-                                  setState(() => statusTyping = 'a');
-                                }),
+                              puppetMaster("P", context),
                             },
                         freezeBtn,
                         lives),
@@ -696,351 +377,63 @@ class _HangmanState extends State<Hangman> {
                   touche(
                       shift ? 'A' : 'a',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "A", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("A", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'S' : 's',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "S", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("S", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'D' : 'd',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "D", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("D", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'F' : 'f',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "F", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("F", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'G' : 'g',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "G", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("G", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'H' : 'h',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "H", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("H", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'J' : 'j',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "J", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("J", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'K' : 'k',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "K", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("K", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'L' : 'l',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "L", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("L", context),
                           },
                       freezeBtn,
                       lives),
@@ -1075,273 +468,49 @@ class _HangmanState extends State<Hangman> {
                   touche(
                       shift ? 'Z' : 'z',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "Z", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("Z", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'X' : 'x',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "X", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("X", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'C' : 'c',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "C", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("C", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'V' : 'v',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "V", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("V", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'B' : 'b',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "B", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("B", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'N' : 'n',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "N", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("N", context),
                           },
                       freezeBtn,
                       lives),
                   touche(
                       shift ? 'M' : 'm',
                       () => {
-                            setState(() => freezeBtn = true),
-                            Timer(const Duration(seconds: 1), () {
-                              setState(() => freezeBtn = false);
-                            }),
-                            mlor = ParseText(moChwazi, rechechMo, "M", context),
-                            statusTyping = mlor.split("&")[1],
-                            mlor = mlor.split("&")[0],
-                            print("men mlor:" + mlor),
-                            moChwazi = mlor,
-                            setState(() => {
-                                  moChwazi = mlor,
-                                }),
-                            if (statusTyping == 'f')
-                              {
-                                if (lives > 1)
-                                  {
-                                    Timer(const Duration(seconds: 1), () {
-                                      setState(() => {
-                                            statusTyping = 'a',
-                                            lives--,
-                                          });
-                                    }),
-                                  }
-                                else
-                                  {
-                                    lives = 0,
-                                    pedi(context),
-                                  }
-                              }
-                            else if (statusTyping == 't')
-                              Timer(const Duration(seconds: 1), () {
-                                setState(() => statusTyping = 'a');
-                              }),
+                            puppetMaster("M", context),
                           },
                       freezeBtn,
                       lives),
@@ -1355,6 +524,39 @@ class _HangmanState extends State<Hangman> {
             ),
           ],
         ));
+  }
+
+  void puppetMaster(ltd, context) {
+    var mlor = "";
+    setState(() => freezeBtn = true);
+    Timer(const Duration(microseconds: 600), () {
+      setState(() => freezeBtn = false);
+    });
+    mlor = ParseText(moChwazi, rechechMo, ltd, context);
+    statusTyping = mlor.split("&")[1];
+    mlor = mlor.split("&")[0];
+    print("men mlor:" + mlor);
+    moChwazi = mlor;
+    setState(() => {
+          moChwazi = mlor,
+        });
+    if (statusTyping == 'f') {
+      if (lives > 1) {
+        Timer(const Duration(seconds: 1), () {
+          setState(() => {
+                statusTyping = 'a',
+                lives--,
+              });
+        });
+      } else {
+        lives = 0;
+        pedi(context);
+      }
+    } else if (statusTyping == 't') {
+      Timer(const Duration(seconds: 1), () {
+        setState(() => statusTyping = 'a');
+      });
+    }
   }
 
   void _getOutOfApp() {
@@ -1453,16 +655,20 @@ class FomateTeks {
       var thisWord = (element['tem'][0]).toString();
 
       print(tab.length);
-      if (lisMoJweDeja.length == tab.length) {
-        print("a deja parcouru tout le tableau dommage sortie imminante");
-        print("Fom soti wi");
-        return kripteTeks(element['tem'][0]) +
-            "&" +
-            element['tem'][1] +
-            "&" +
-            "danger";
-      }
-      lisMoJweDeja.add(thisWord);
+      // if (lisMoJweDeja.length == tab.length) {
+      //   print("a deja parcouru tout le tableau dommage sortie imminante");
+      //   print("Fom soti wi");
+      //   return kripteTeks(element['tem'][0]) +
+      //       "&" +
+      //       element['tem'][1] +
+      //       "&" +
+      //       "danger" +
+      //       "&" +
+      //       "danger" +
+      //       "&" +
+      //       "danger";
+      // }
+      // lisMoJweDeja.add(thisWord);
       print("this word:" + thisWord);
       print(lisMoJweDeja.length);
       //
@@ -1502,12 +708,20 @@ class FomateTeks {
           "&" +
           element['tem'][1] +
           "&" +
-          element['tem'][0]);
+          element['tem'][0] +
+          "&" +
+          element['info'][0] +
+          "&" +
+          element['info'][1]);
       return kripteTeks(element['tem'][0]) +
           "&" +
           element['tem'][1] +
           "&" +
-          element['tem'][0];
+          element['tem'][0] +
+          "&" +
+          element['info'][0] +
+          "&" +
+          element['info'][1];
     } else {
       print("Print fraz la deja: " + fraz);
       return fraz;
@@ -1538,10 +752,53 @@ class EnfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: statusInfo == "loser"
-            ? Text("Domaj se fini...")
-            : Text("You win bro"),
-      ),
+          child: statusInfo == "loser"
+              ? Row(
+                  children: [
+                    Text("Domaj se fini..."),
+                    Text(losing),
+                  ],
+                )
+              : Center(
+                  child: Column(
+                    children: [
+                      Text("You win bro"),
+                      Text(winning),
+                      // const Spacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {}, child: Text("Rejwe")),
+                          ElevatedButton(onPressed: () {}, child: Text("Kite")),
+                          Container(
+                            width: 200,
+                            height: 200,
+                            child: Icon(Icons.android),
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade300,
+                                    offset: Offset(4.0, 4.0),
+                                    blurRadius: 15.0,
+                                    spreadRadius: 1.0,
+                                  ),
+                                  BoxShadow(
+                                    color: Colors.white,
+                                    offset: Offset(-4.0, -4.0),
+                                    blurRadius: 15.0,
+                                    spreadRadius: 1.0,
+                                  )
+                                ]),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                )),
     );
   }
 }
