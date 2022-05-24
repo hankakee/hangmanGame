@@ -763,6 +763,9 @@ class EnfoScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                // statusInfo == "loser"?
+                //  Text("Domaj se fini..."),
+                //     Text(losing),
                 Text(
                     "Sapa bolèt menm non , felisitasyon ou genyen san pedi yon chans"),
                 Text(winning),
