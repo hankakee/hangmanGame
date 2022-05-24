@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import "dart:math";
 import "dart:io";
 import 'dart:async';
+// import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 
 void main() {
   runApp(
@@ -216,8 +217,8 @@ class _HangmanState extends State<Hangman> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const EnfoScreen(statusInfo: "winner")));
+                                builder: (context) => EnfoScreen(
+                                    statusInfo: "winner", vies: lives)));
                       },
                     ),
                   ),
@@ -580,11 +581,12 @@ class _HangmanState extends State<Hangman> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => const EnfoScreen(statusInfo: "loser")));
+            builder: (context) =>
+                const EnfoScreen(statusInfo: "loser", vies: 0)));
     return "";
   }
 
-  static String ParseText(String word, String search, String letter, context) {
+  String ParseText(String word, String search, String letter, context) {
     // moChwazi
     var tmpKrypt = word.split("");
     var tmptesksTab = search.split("");
@@ -628,7 +630,8 @@ class _HangmanState extends State<Hangman> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => const EnfoScreen(statusInfo: "winner")));
+                builder: (context) =>
+                    EnfoScreen(statusInfo: "winner", vies: lives)));
         // context
       }
       print("Find the bottle");
@@ -746,59 +749,95 @@ class MizajouScreen extends StatelessWidget {
 
 class EnfoScreen extends StatelessWidget {
   final String statusInfo;
-  const EnfoScreen({Key? key, required this.statusInfo}) : super(key: key);
+  final int vies;
+  const EnfoScreen({Key? key, required this.statusInfo, required this.vies})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          child: statusInfo == "loser"
-              ? Row(
+        body: Container(
+            color: Colors.white,
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                    "Sapa bolèt menm non , felisitasyon ou genyen san pedi yon chans"),
+                Text(winning),
+                // const Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Domaj se fini..."),
-                    Text(losing),
+                    GestureDetector(
+                        onTap: () {
+                          print("Rejwe clicked");
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 25,
+                          margin: EdgeInsets.only(top: 20.0, right: 20.0),
+                          padding: EdgeInsets.all(4.0),
+                          child: Center(
+                              child: Text(
+                            "Rejwe",
+                            style: TextStyle(fontWeight: FontWeight.w400),
+                          )),
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFFA799AF),
+                                  offset: Offset(-1.0, -1.0),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0,
+                                ),
+                                BoxShadow(
+                                  color: Color(0xFFA799AF),
+                                  offset: Offset(1.0, 1.0),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0,
+                                ),
+                              ]),
+                        )),
+                    SizedBox(),
+                    GestureDetector(
+                        onTap: () {
+                          print("Kite clicked");
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 25,
+                          margin: EdgeInsets.only(top: 20.0),
+                          padding: EdgeInsets.all(4.0),
+                          child: Center(
+                              child: Text(
+                            "Kite ",
+                            style: TextStyle(fontWeight: FontWeight.w400),
+                          )),
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFFA799AF),
+                                  offset: Offset(-1.0, -1.0),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0,
+                                ),
+                                BoxShadow(
+                                  color: Color(0xFFA799AF),
+                                  offset: Offset(1.0, 1.0),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0,
+                                ),
+                              ]),
+                        )),
                   ],
                 )
-              : Center(
-                  child: Column(
-                    children: [
-                      Text("You win bro"),
-                      Text(winning),
-                      // const Spacer(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {}, child: Text("Rejwe")),
-                          ElevatedButton(onPressed: () {}, child: Text("Kite")),
-                          Container(
-                            width: 200,
-                            height: 200,
-                            child: Icon(Icons.android),
-                            decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.shade300,
-                                    offset: Offset(4.0, 4.0),
-                                    blurRadius: 15.0,
-                                    spreadRadius: 1.0,
-                                  ),
-                                  BoxShadow(
-                                    color: Colors.white,
-                                    offset: Offset(-4.0, -4.0),
-                                    blurRadius: 15.0,
-                                    spreadRadius: 1.0,
-                                  )
-                                ]),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                )),
-    );
+              ],
+            ))));
   }
 }
