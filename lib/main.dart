@@ -210,18 +210,18 @@ class _HangmanState extends State<Hangman> {
                     style: const TextStyle(fontSize: 35.0),
                     textAlign: TextAlign.center,
                   ),
-                  Container(
-                    child: ElevatedButton(
-                      child: Text("Bor"),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EnfoScreen(
-                                    statusInfo: "winner", vies: lives)));
-                      },
-                    ),
-                  ),
+                  // Container(
+                  //   child: ElevatedButton(
+                  //     child: Text("Boto"),
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //               builder: (context) => EnfoScreen(
+                  //                   statusInfo: "winner", vies: lives)));
+                  //     },
+                  //   ),
+                  // ),
                   Container(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: Text(infoChwazi)),
@@ -547,11 +547,13 @@ class _HangmanState extends State<Hangman> {
           setState(() => {
                 statusTyping = 'a',
                 lives--,
+                if (lives <= 0)
+                  {
+                    statusTyping = 'f',
+                    pedi(context),
+                  }
               });
         });
-      } else {
-        lives = 0;
-        pedi(context);
       }
     } else if (statusTyping == 't') {
       Timer(const Duration(seconds: 1), () {
@@ -753,22 +755,188 @@ class EnfoScreen extends StatelessWidget {
   const EnfoScreen({Key? key, required this.statusInfo, required this.vies})
       : super(key: key);
 
+  List<Widget> countStars(int count) {
+    List<Widget> starsData = [];
+
+    for (var k = 0; k < count; k++) {
+      starsData.add(IconButton(
+          iconSize: 25.0,
+          icon: const Icon(Icons.star),
+          color: Color(0xFFF3BC10),
+          onPressed: () {}));
+    }
+
+    return starsData;
+  }
+
   @override
   Widget build(BuildContext context) {
+    String textEnfo = "";
+
+    if (vies == 5) {
+      textEnfo =
+          "Sapa bolèt menm non , felisitasyon ou genyen san pedi yon chans!!!";
+    } else if (vies == 2 || vies == 1) {
+      textEnfo = "Waw ou manke chire wi...,antouka ou fè bèl efo wi...";
+    } else if (vies > 2 && vies < 5) {
+      textEnfo = "Felitasyon ou genyen wi...";
+    } else {
+      textEnfo = "Podyab , ou pèdi wi!!!";
+    }
+
     return Scaffold(
         body: Container(
-            color: Colors.white,
-            child: Center(
-                child: Column(
+      color: Colors.white,
+      child: statusInfo == "winner"
+          ? Center(
+              child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // statusInfo == "loser"?
-                //  Text("Domaj se fini..."),
-                //     Text(losing),
+                IconButton(
+                    iconSize: 70.0,
+                    icon: const Icon(Icons.emoji_events_sharp),
+                    color: Color.fromARGB(255, 0, 114, 0),
+                    onPressed: () {}),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: countStars(vies),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    textEnfo,
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 0, 114, 0),
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+
                 Text(
-                    "Sapa bolèt menm non , felisitasyon ou genyen san pedi yon chans"),
-                Text(winning),
+                  winning,
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 0, 114, 0),
+                      fontWeight: FontWeight.bold),
+                ),
+                // const Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          print("Rejwe win clicked");
+                          Navigator.pop(context, true);
+                          print("Yo replay klike");
+                          fraz = "";
+                          // setState(() {
+                          //   lives = 5;
+                          //   statusTyping = 'a';
+                          fraz = FomateTeks.rekipereTeks(mo, fraz);
+                          moChwazi = fraz.split("&")[0];
+                          infoChwazi = fraz.split("&")[1];
+                          rechechMo = fraz.split("&")[2];
+                          winning = fraz.split("&")[3];
+                          losing = fraz.split("&")[4];
+                          // });
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 25,
+                          margin: EdgeInsets.only(top: 20.0, right: 20.0),
+                          padding: EdgeInsets.all(4.0),
+                          child: Center(
+                              child: Text(
+                            "Rejwe",
+                            style: TextStyle(fontWeight: FontWeight.w400),
+                          )),
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFFA799AF),
+                                  offset: Offset(-1.0, -1.0),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0,
+                                ),
+                                BoxShadow(
+                                  color: Color(0xFFA799AF),
+                                  offset: Offset(1.0, 1.0),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0,
+                                ),
+                              ]),
+                        )),
+                    SizedBox(),
+                    GestureDetector(
+                        onTap: () {
+                          print("Kite clicked");
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 25,
+                          margin: EdgeInsets.only(top: 20.0),
+                          padding: EdgeInsets.all(4.0),
+                          child: Center(
+                              child: Text(
+                            "Kite ",
+                            style: TextStyle(fontWeight: FontWeight.w400),
+                          )),
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFFA799AF),
+                                  offset: Offset(-1.0, -1.0),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0,
+                                ),
+                                BoxShadow(
+                                  color: Color(0xFFA799AF),
+                                  offset: Offset(1.0, 1.0),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0,
+                                ),
+                              ]),
+                        )),
+                  ],
+                )
+              ],
+            ))
+          :
+          //loser
+          Center(
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                IconButton(
+                    iconSize: 70.0,
+                    icon:
+                        const Icon(Icons.sentiment_very_dissatisfied_outlined),
+                    color: Color.fromARGB(255, 219, 0, 0),
+                    onPressed: () {}),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: countStars(vies),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    textEnfo,
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 219, 0, 0),
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+
+                Text(
+                  losing,
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 219, 0, 0),
+                      fontWeight: FontWeight.bold),
+                ),
                 // const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -841,6 +1009,7 @@ class EnfoScreen extends StatelessWidget {
                   ],
                 )
               ],
-            ))));
+            )),
+    ));
   }
 }
