@@ -69,6 +69,22 @@ class _HangmanState extends State<Hangman> {
     winning = fraz.split("&")[3];
   }
 
+  callbackReplay() {
+    Navigator.pop(context, true);
+    print("Yo replay klike");
+    fraz = "";
+    setState(() {
+      lives = 5;
+      statusTyping = 'a';
+      fraz = FomateTeks.rekipereTeks(mo, fraz);
+      moChwazi = fraz.split("&")[0];
+      infoChwazi = fraz.split("&")[1];
+      rechechMo = fraz.split("&")[2];
+      winning = fraz.split("&")[3];
+      losing = fraz.split("&")[4];
+    });
+  }
+
   Widget touche(String lt, callback, bool freeze, int lives) {
     if (lt == "MAJ") {
       return (Container(
@@ -156,19 +172,7 @@ class _HangmanState extends State<Hangman> {
               ),
               ListTile(
                   onTap: () {
-                    Navigator.pop(context, true);
-                    print("Yo replay klike");
-                    fraz = "";
-                    setState(() {
-                      lives = 5;
-                      statusTyping = 'a';
-                      fraz = FomateTeks.rekipereTeks(mo, fraz);
-                      moChwazi = fraz.split("&")[0];
-                      infoChwazi = fraz.split("&")[1];
-                      rechechMo = fraz.split("&")[2];
-                      winning = fraz.split("&")[3];
-                      losing = fraz.split("&")[4];
-                    });
+                    callbackReplay();
                   },
                   title: const Text(
                     "Rejwe",
@@ -185,9 +189,7 @@ class _HangmanState extends State<Hangman> {
               ListTile(
                   onTap: () {
                     print("soti");
-                    // // exit(0);
                     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-
                     // _getOutOfApp();
                   },
                   title: const Text("Kite",
@@ -530,28 +532,31 @@ class _HangmanState extends State<Hangman> {
   void puppetMaster(ltd, context) {
     var mlor = "";
     setState(() => freezeBtn = true);
-    Timer(const Duration(microseconds: 600), () {
+    Timer(const Duration(seconds: 1), () {
       setState(() => freezeBtn = false);
     });
     mlor = ParseText(moChwazi, rechechMo, ltd, context);
     statusTyping = mlor.split("&")[1];
+    print("ici in the puppet master " + statusTyping);
     mlor = mlor.split("&")[0];
     print("men mlor:" + mlor);
     moChwazi = mlor;
     setState(() => {
           moChwazi = mlor,
         });
+
     if (statusTyping == 'f') {
-      if (lives > 1) {
+      if (lives == 1 || lives < 1) {
+        print("yow ou fout pedi wi");
+        statusTyping = 'f';
+        pedi(context);
+        setState(() => lives = 0);
+        return;
+      } else if (lives > 1) {
         Timer(const Duration(seconds: 1), () {
           setState(() => {
                 statusTyping = 'a',
                 lives--,
-                if (lives <= 0)
-                  {
-                    statusTyping = 'f',
-                    pedi(context),
-                  }
               });
         });
       }
@@ -583,8 +588,8 @@ class _HangmanState extends State<Hangman> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                const EnfoScreen(statusInfo: "loser", vies: 0)));
+            builder: (context) => EnfoScreen(
+                statusInfo: "loser", vies: 0, callbackFunction: () {})));
     return "";
   }
 
@@ -632,8 +637,10 @@ class _HangmanState extends State<Hangman> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    EnfoScreen(statusInfo: "winner", vies: lives)));
+                builder: (context) => EnfoScreen(
+                    statusInfo: "winner",
+                    vies: lives,
+                    callbackFunction: callbackReplay)));
         // context
       }
       print("Find the bottle");
@@ -752,7 +759,13 @@ class MizajouScreen extends StatelessWidget {
 class EnfoScreen extends StatelessWidget {
   final String statusInfo;
   final int vies;
-  const EnfoScreen({Key? key, required this.statusInfo, required this.vies})
+  final Function callbackFunction;
+
+  const EnfoScreen(
+      {Key? key,
+      required this.statusInfo,
+      required this.vies,
+      required this.callbackFunction})
       : super(key: key);
 
   List<Widget> countStars(int count) {
@@ -762,7 +775,7 @@ class EnfoScreen extends StatelessWidget {
       starsData.add(IconButton(
           iconSize: 25.0,
           icon: const Icon(Icons.star),
-          color: Color(0xFFF3BC10),
+          color: const Color(0xFFF3BC10),
           onPressed: () {}));
     }
 
@@ -825,19 +838,7 @@ class EnfoScreen extends StatelessWidget {
                     GestureDetector(
                         onTap: () {
                           print("Rejwe win clicked");
-                          Navigator.pop(context, true);
-                          print("Yo replay klike");
-                          fraz = "";
-                          // setState(() {
-                          //   lives = 5;
-                          //   statusTyping = 'a';
-                          fraz = FomateTeks.rekipereTeks(mo, fraz);
-                          moChwazi = fraz.split("&")[0];
-                          infoChwazi = fraz.split("&")[1];
-                          rechechMo = fraz.split("&")[2];
-                          winning = fraz.split("&")[3];
-                          losing = fraz.split("&")[4];
-                          // });
+                          callbackFunction();
                         },
                         child: Container(
                           width: 100,
