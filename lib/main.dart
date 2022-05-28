@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
-import "dart:math";
 import "dart:io";
 import 'dart:async';
-// import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'utils/fomate.dart';
+import 'screens/enfoscreen.dart';
 
 void main() {
   runApp(
@@ -87,21 +87,38 @@ class _HangmanState extends State<Hangman> {
 
   Widget touche(String lt, callback, bool freeze, int lives) {
     if (lt == "MAJ") {
-      return (Container(
-        color: const Color.fromARGB(255, 255, 255, 255),
-        child: IconButton(
-            icon: const Icon(Icons.arrow_upward), onPressed: callback),
-      ));
+      return TextButton(
+          child: const Icon(Icons.arrow_upward,
+              color: Color.fromARGB(255, 0, 0, 0)),
+          style: ButtonStyle(
+              padding: MaterialStateProperty.all<EdgeInsets>(
+                  const EdgeInsets.all(0)),
+              backgroundColor: MaterialStateProperty.all<Color>(
+                  Color.fromARGB(255, 255, 255, 255)),
+              foregroundColor: MaterialStateProperty.all<Color>(
+                  const Color.fromARGB(255, 0, 0, 0)),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.0),
+                      side: const BorderSide(
+                          color: Color.fromARGB(255, 173, 173, 173))))),
+          onPressed: callback);
     } else if (lt == "CROSS") {
-      return Container(
-        color: const Color(0XFFAEB5BF),
-        child: IconButton(
-            icon: const Icon(
-              Icons.backspace_rounded,
-              color: Colors.white,
-            ),
-            onPressed: callback),
-      );
+      return TextButton(
+          child: const Icon(Icons.backspace_rounded, color: Colors.white),
+          style: ButtonStyle(
+              padding: MaterialStateProperty.all<EdgeInsets>(
+                  const EdgeInsets.all(0)),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(const Color(0XFFAEB5BF)),
+              foregroundColor: MaterialStateProperty.all<Color>(
+                  const Color.fromARGB(255, 0, 0, 0)),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.0),
+                      side: const BorderSide(
+                          color: Color.fromARGB(255, 173, 173, 173))))),
+          onPressed: callback);
     } else {
       return TextButton(
           child: Text(
@@ -237,41 +254,99 @@ class _HangmanState extends State<Hangman> {
               ),
             ),
             statusTyping == 'f'
-                ? Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                        Text(thisletter,
-                            style: const TextStyle(
-                              color: Color(0XFFFF0000),
-                              fontSize: 40.0,
-                            )),
-                        IconButton(
-                            icon: const Icon(
-                              Icons.close,
-                              size: 20.00,
-                              color: Color(0XFFFF0000),
-                            ),
-                            onPressed: () {}),
-                      ])
-                : statusTyping == 't'
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                ? SizedBox(
+                    width: 90.0,
+                    height: 70.0,
+                    child: TextButton(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
                             Text(thisletter,
                                 style: const TextStyle(
-                                  color: Color(0XFF00FF00),
+                                  color: Color(0XFFFF0000),
                                   fontSize: 40.0,
                                 )),
-                            IconButton(
-                                icon: const Icon(
-                                  Icons.check,
-                                  size: 20.00,
-                                  color: Color(0XFF00FF00),
-                                ),
-                                onPressed: () {}),
-                          ])
+                            const IconButton(
+                              icon: Icon(
+                                Icons.close,
+                                size: 20.00,
+                                color: Color(0XFFFF0000),
+                              ),
+                              onPressed: null,
+                            )
+                          ],
+                        ),
+                        style: ButtonStyle(
+                            padding: MaterialStateProperty.all<EdgeInsets>(
+                                const EdgeInsets.all(0)),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Color.fromARGB(255, 255, 255, 255)),
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                const Color.fromARGB(255, 0, 0, 0)),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7.0),
+                                    side: const BorderSide(
+                                        color: Color.fromARGB(
+                                            255, 173, 173, 173))))),
+                        onPressed: () {})) //  Row(
+                //
+                //     children: [
+                //         Text(thisletter,
+                //             style: const TextStyle(
+                //               color: Color(0XFFFF0000),
+                //               fontSize: 40.0,
+                //             )),
+                //         IconButton(
+                //             icon: const Icon(
+                //               Icons.close,
+                //               size: 20.00,
+                //               color: Color(0XFFFF0000),
+                //             ),
+                //             onPressed: () {}),
+                //       ])
+                : statusTyping == 't'
+                    ? SizedBox(
+                        width: 90.0,
+                        height: 70.0,
+                        child: TextButton(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(thisletter,
+                                    style: const TextStyle(
+                                      color: Color(0XFF00FF00),
+                                      fontSize: 40.0,
+                                    )),
+                                const IconButton(
+                                  icon: Icon(
+                                    Icons.check,
+                                    size: 20.00,
+                                    color: Color(0XFF00FF00),
+                                  ),
+                                  onPressed: null,
+                                )
+                              ],
+                            ),
+                            style: ButtonStyle(padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)), backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 255, 255, 255)), foregroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 0, 0)), shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0), side: const BorderSide(color: Color.fromARGB(255, 173, 173, 173))))),
+                            onPressed: () {}))
+
+                    //  Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.center, children: [
+                    //     Text(thisletter,
+                    //         style: const TextStyle(
+                    //           color: Color(0XFF00FF00),
+                    //           fontSize: 40.0,
+                    //         )),
+                    //     IconButton(
+                    //         icon: const Icon(
+                    //           Icons.check,
+                    //           size: 20.00,
+                    //           color: Color(0XFF00FF00),
+                    //         ),
+                    //         onPressed: () {}),
+                    //   ])
                     : const Text(""),
             // ElevatedButton(
             //     onPressed: () {
@@ -547,7 +622,6 @@ class _HangmanState extends State<Hangman> {
 
     if (statusTyping == 'f') {
       if (lives == 1 || lives < 1) {
-        print("yow ou fout pedi wi");
         statusTyping = 'f';
         pedi(context);
         setState(() => lives = 0);
@@ -589,7 +663,11 @@ class _HangmanState extends State<Hangman> {
         context,
         MaterialPageRoute(
             builder: (context) => EnfoScreen(
-                statusInfo: "loser", vies: 0, callbackFunction: () {})));
+                statusInfo: "loser",
+                vies: 0,
+                losing: losing,
+                winning: winning,
+                callbackFunction: () {})));
     return "";
   }
 
@@ -640,6 +718,8 @@ class _HangmanState extends State<Hangman> {
                 builder: (context) => EnfoScreen(
                     statusInfo: "winner",
                     vies: lives,
+                    losing: losing,
+                    winning: winning,
                     callbackFunction: callbackReplay)));
         // context
       }
@@ -648,95 +728,6 @@ class _HangmanState extends State<Hangman> {
       print("temoin: " + tmoin);
 
       return ro + "&" + tmoin;
-    }
-  }
-}
-
-class FomateTeks {
-  static String kripteTeks(String teks) {
-    var strparsed = "";
-    for (var i = 0; i < teks.length; i++) {
-      strparsed += "*";
-    }
-    return (strparsed);
-  }
-
-  static String rekipereTeks(List tab, fraz) {
-    if (fraz == "") {
-      var element = tab[Random().nextInt(tab.length)];
-      var thisWord = (element['tem'][0]).toString();
-
-      print(tab.length);
-      // if (lisMoJweDeja.length == tab.length) {
-      //   print("a deja parcouru tout le tableau dommage sortie imminante");
-      //   print("Fom soti wi");
-      //   return kripteTeks(element['tem'][0]) +
-      //       "&" +
-      //       element['tem'][1] +
-      //       "&" +
-      //       "danger" +
-      //       "&" +
-      //       "danger" +
-      //       "&" +
-      //       "danger";
-      // }
-      // lisMoJweDeja.add(thisWord);
-      print("this word:" + thisWord);
-      print(lisMoJweDeja.length);
-      //
-      //
-      //else if (!(lisMoJweDeja.contains(thisWord))) {
-      //   print('Nou bon li pa Contains lettter breaking out');
-      //   print("Nouvo eleman:" + element);
-      //   print(element);
-      // }
-      // else {
-      // while (lisMoJweDeja.contains(thisWord)) {
-      //   if (lisMoJweDeja.contains(thisWord)) {
-      // print("Ancien eleman:" + element);
-      // print('Contains lettter chwazi on lot');
-      // element = tab[Random().nextInt(tab.length)];
-      //   } else {
-      //     print('Nou bon li pa Contains lettter breaking out');
-      //     print("Nouvo eleman:" + element);
-      //     print(element);
-      //     break;
-      //   }
-      // }
-      // }
-
-      //  else if (LisMoJweDeja.contains(element)) {
-      //   element = tab[Random().nextInt(tab.length)];
-      //   print("la deja bro");
-      //   print(element);
-      // } else {
-      //   LisMoJweDeja.add(element['tem'][0]);
-      //   // break;
-      // }
-      // print("LisMoJweDeja:");
-      print(lisMoJweDeja.toString());
-
-      print(element['tem'][0] +
-          "&" +
-          element['tem'][1] +
-          "&" +
-          element['tem'][0] +
-          "&" +
-          element['info'][0] +
-          "&" +
-          element['info'][1]);
-      return kripteTeks(element['tem'][0]) +
-          "&" +
-          element['tem'][1] +
-          "&" +
-          element['tem'][0] +
-          "&" +
-          element['info'][0] +
-          "&" +
-          element['info'][1];
-    } else {
-      print("Print fraz la deja: " + fraz);
-      return fraz;
     }
   }
 }
@@ -753,264 +744,5 @@ class MizajouScreen extends StatelessWidget {
             Text("Domaj brother eskeuw vle reset oubyen wap tan lot version"),
       ),
     );
-  }
-}
-
-class EnfoScreen extends StatelessWidget {
-  final String statusInfo;
-  final int vies;
-  final Function callbackFunction;
-
-  const EnfoScreen(
-      {Key? key,
-      required this.statusInfo,
-      required this.vies,
-      required this.callbackFunction})
-      : super(key: key);
-
-  List<Widget> countStars(int count) {
-    List<Widget> starsData = [];
-
-    for (var k = 0; k < count; k++) {
-      starsData.add(IconButton(
-          iconSize: 25.0,
-          icon: const Icon(Icons.star),
-          color: const Color(0xFFF3BC10),
-          onPressed: () {}));
-    }
-
-    return starsData;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    String textEnfo = "";
-
-    if (vies == 5) {
-      textEnfo =
-          "Sapa bolèt menm non , felisitasyon ou genyen san pedi yon chans!!!";
-    } else if (vies == 2 || vies == 1) {
-      textEnfo = "Waw ou manke chire wi...,antouka ou fè bèl efo wi...";
-    } else if (vies > 2 && vies < 5) {
-      textEnfo = "Felitasyon ou genyen wi...";
-    } else {
-      textEnfo = "Podyab , ou pèdi wi!!!";
-    }
-
-    return Scaffold(
-        body: Container(
-      color: Colors.white,
-      child: statusInfo == "winner"
-          ? Center(
-              child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                    iconSize: 70.0,
-                    icon: const Icon(Icons.emoji_events_sharp),
-                    color: Color.fromARGB(255, 0, 114, 0),
-                    onPressed: () {}),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: countStars(vies),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    textEnfo,
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 0, 114, 0),
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-
-                Text(
-                  winning,
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 0, 114, 0),
-                      fontWeight: FontWeight.bold),
-                ),
-                // const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          print("Rejwe win clicked");
-                          callbackFunction();
-                        },
-                        child: Container(
-                          width: 100,
-                          height: 25,
-                          margin: EdgeInsets.only(top: 20.0, right: 20.0),
-                          padding: EdgeInsets.all(4.0),
-                          child: Center(
-                              child: Text(
-                            "Rejwe",
-                            style: TextStyle(fontWeight: FontWeight.w400),
-                          )),
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color(0xFFA799AF),
-                                  offset: Offset(-1.0, -1.0),
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0,
-                                ),
-                                BoxShadow(
-                                  color: Color(0xFFA799AF),
-                                  offset: Offset(1.0, 1.0),
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0,
-                                ),
-                              ]),
-                        )),
-                    SizedBox(),
-                    GestureDetector(
-                        onTap: () {
-                          print("Kite clicked");
-                        },
-                        child: Container(
-                          width: 100,
-                          height: 25,
-                          margin: EdgeInsets.only(top: 20.0),
-                          padding: EdgeInsets.all(4.0),
-                          child: Center(
-                              child: Text(
-                            "Kite ",
-                            style: TextStyle(fontWeight: FontWeight.w400),
-                          )),
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color(0xFFA799AF),
-                                  offset: Offset(-1.0, -1.0),
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0,
-                                ),
-                                BoxShadow(
-                                  color: Color(0xFFA799AF),
-                                  offset: Offset(1.0, 1.0),
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0,
-                                ),
-                              ]),
-                        )),
-                  ],
-                )
-              ],
-            ))
-          :
-          //loser
-          Center(
-              child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                    iconSize: 70.0,
-                    icon:
-                        const Icon(Icons.sentiment_very_dissatisfied_outlined),
-                    color: Color.fromARGB(255, 219, 0, 0),
-                    onPressed: () {}),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: countStars(vies),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    textEnfo,
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 219, 0, 0),
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-
-                Text(
-                  losing,
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 219, 0, 0),
-                      fontWeight: FontWeight.bold),
-                ),
-                // const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          print("Rejwe clicked");
-                        },
-                        child: Container(
-                          width: 100,
-                          height: 25,
-                          margin: EdgeInsets.only(top: 20.0, right: 20.0),
-                          padding: EdgeInsets.all(4.0),
-                          child: Center(
-                              child: Text(
-                            "Rejwe",
-                            style: TextStyle(fontWeight: FontWeight.w400),
-                          )),
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color(0xFFA799AF),
-                                  offset: Offset(-1.0, -1.0),
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0,
-                                ),
-                                BoxShadow(
-                                  color: Color(0xFFA799AF),
-                                  offset: Offset(1.0, 1.0),
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0,
-                                ),
-                              ]),
-                        )),
-                    SizedBox(),
-                    GestureDetector(
-                        onTap: () {
-                          print("Kite clicked");
-                        },
-                        child: Container(
-                          width: 100,
-                          height: 25,
-                          margin: EdgeInsets.only(top: 20.0),
-                          padding: EdgeInsets.all(4.0),
-                          child: Center(
-                              child: Text(
-                            "Kite ",
-                            style: TextStyle(fontWeight: FontWeight.w400),
-                          )),
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color(0xFFA799AF),
-                                  offset: Offset(-1.0, -1.0),
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0,
-                                ),
-                                BoxShadow(
-                                  color: Color(0xFFA799AF),
-                                  offset: Offset(1.0, 1.0),
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0,
-                                ),
-                              ]),
-                        )),
-                  ],
-                )
-              ],
-            )),
-    ));
   }
 }
