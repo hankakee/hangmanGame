@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 
+// hide BoxDecoration, BoxShadow
+// import "package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart";
 class EnfoScreen extends StatelessWidget {
   final String statusInfo;
   final int vies;
@@ -57,14 +59,14 @@ class EnfoScreen extends StatelessWidget {
                 IconButton(
                     iconSize: 70.0,
                     icon: const Icon(Icons.emoji_events_sharp),
-                    color: Color.fromARGB(255, 0, 114, 0),
+                    color: const Color.fromARGB(255, 0, 114, 0),
                     onPressed: () {}),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: countStars(vies),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Text(
                     textEnfo,
                     style: const TextStyle(
@@ -91,17 +93,17 @@ class EnfoScreen extends StatelessWidget {
                         child: Container(
                           width: 100,
                           height: 25,
-                          margin: EdgeInsets.only(top: 20.0, right: 20.0),
-                          padding: EdgeInsets.all(4.0),
-                          child: Center(
+                          margin: const EdgeInsets.only(top: 20.0, right: 20.0),
+                          padding: const EdgeInsets.all(4.0),
+                          child: const Center(
                               child: Text(
                             "Rejwe",
                             style: TextStyle(fontWeight: FontWeight.w400),
                           )),
                           decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                              borderRadius: BorderRadius.circular(30.0),
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Color(0xFFA799AF),
                                   offset: Offset(-1.0, -1.0),
@@ -116,7 +118,7 @@ class EnfoScreen extends StatelessWidget {
                                 ),
                               ]),
                         )),
-                    SizedBox(),
+                    const SizedBox(),
                     GestureDetector(
                         onTap: () {
                           print("Kite clicked");
@@ -124,17 +126,17 @@ class EnfoScreen extends StatelessWidget {
                         child: Container(
                           width: 100,
                           height: 25,
-                          margin: EdgeInsets.only(top: 20.0),
-                          padding: EdgeInsets.all(4.0),
-                          child: Center(
+                          margin: const EdgeInsets.only(top: 20.0),
+                          padding: const EdgeInsets.all(4.0),
+                          child: const Center(
                               child: Text(
                             "Kite ",
                             style: TextStyle(fontWeight: FontWeight.w400),
                           )),
                           decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Color(0xFFA799AF),
                                   offset: Offset(-1.0, -1.0),
@@ -171,7 +173,7 @@ class EnfoScreen extends StatelessWidget {
                   children: countStars(vies),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Text(
                     textEnfo,
                     style: const TextStyle(
@@ -192,23 +194,23 @@ class EnfoScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                         onTap: () {
-                          print("Rejwe pedi clicked");
                           callbackFunction();
+                          print("Rejwe pedi clicked nooooo");
                         },
                         child: Container(
                           width: 100,
                           height: 25,
-                          margin: EdgeInsets.only(top: 20.0, right: 20.0),
-                          padding: EdgeInsets.all(4.0),
-                          child: Center(
+                          margin: const EdgeInsets.only(top: 20.0, right: 20.0),
+                          padding: const EdgeInsets.all(4.0),
+                          child: const Center(
                               child: Text(
                             "Rejwe",
                             style: TextStyle(fontWeight: FontWeight.w400),
                           )),
                           decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Color(0xFFA799AF),
                                   offset: Offset(-1.0, -1.0),

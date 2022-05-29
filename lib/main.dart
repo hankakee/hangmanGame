@@ -4,6 +4,7 @@ import "dart:io";
 import 'dart:async';
 import 'utils/fomate.dart';
 import 'screens/enfoscreen.dart';
+import 'screens/mizajou.dart';
 
 void main() {
   runApp(
@@ -22,12 +23,16 @@ String winning = "";
 String losing = "";
 
 List<String> lisMoJweDeja = [];
-List mo = [
+List<String> letPouMosa = [];
+
+List arrayMoKLe = [
   {
+    "id": 20,
     "tem": ["BONSWA", "Se yon mo ki itilize pou salye moun le swa..."],
     "info": ["Wi se BONSWA yo di le swa...", "Domaj mo sa te komanse a B..."]
   },
   {
+    "id": 21,
     "tem": ["LEKOL", "Youn nan pi bon kote ki ka enstwi moun..."],
     "info": [
       "Wi LEKOL se youn nan kote ki ka enstwi moun...",
@@ -35,16 +40,28 @@ List mo = [
     ]
   },
   // {
+  //   "id": 22,
   //   "tem": ["SOULYE", "Itil pou proteje pye'w..."],
-  //   "info": ["Wi soulye Itil pou proteje pye'w...", "Domaj mo sa te komanse a L..."]
+  //   "info": [
+  //     "Wi soulye Itil pou proteje pye'w...",
+  //     "Domaj mo sa te komanse a L..."
+  //   ]
   // },
   // {
+  //   "id": 23,
   //   "tem": ["LAJAN", "Echanjab pou preske tout bagay"],
-  //   "info": ["Wi lajan echanjab pou preske tout bagay...", "Domaj mo sa te komanse a L..."]
+  //   "info": [
+  //     "Wi lajan echanjab pou preske tout bagay...",
+  //     "Domaj mo sa te komanse a L..."
+  //   ]
   // },
   // {
-  //   "tem": ["LEGIM", "Ka akonpaye preske tout manje..."],
-  //   "info": ["Wi LEGIM ka akonpaye preske tout manje...", "Domaj mo sa te komanse a L..."]
+  //   "id": 24,
+  //   "tem": ["Zaboka", "Ka akonpaye preske tout manje..."],
+  //   "info": [
+  //     "Wi zaboka ka akonpaye preske tout manje...",
+  //     "Domaj mo sa te komanse a Z..."
+  //   ]
   // }
 ];
 
@@ -61,28 +78,46 @@ class _HangmanState extends State<Hangman> {
   bool freezeBtn = false;
   _HangmanState() {
     //enstans
-    fraz = FomateTeks.rekipereTeks(mo, fraz);
+    fraz = FomateTeks.rekipereTeks(arrayMoKLe, fraz);
     moChwazi = fraz.split("&")[0];
     infoChwazi = fraz.split("&")[1];
     rechechMo = fraz.split("&")[2];
     losing = fraz.split("&")[4];
     winning = fraz.split("&")[3];
+    letPouMosa.clear();
   }
 
-  callbackReplay() {
-    Navigator.pop(context, true);
-    print("Yo replay klike");
-    fraz = "";
-    setState(() {
-      lives = 5;
-      statusTyping = 'a';
-      fraz = FomateTeks.rekipereTeks(mo, fraz);
-      moChwazi = fraz.split("&")[0];
-      infoChwazi = fraz.split("&")[1];
-      rechechMo = fraz.split("&")[2];
-      winning = fraz.split("&")[3];
-      losing = fraz.split("&")[4];
-    });
+  callbackReplay(attrib) {
+    print(attrib);
+    if (arrayMoKLe.isEmpty) {
+      print("So its done go to mizajouscreen brothers");
+    } else {
+      if (attrib != "loose") {
+        print("Mo gagnan bro:" + attrib);
+        // cheche mo gagnan an epi efasel
+        // arrayMoKLe
+        print('finding this bro...');
+        print("arrayMoKLe list : " + arrayMoKLe.toString());
+        print("arrayMoKLe list qty: " + arrayMoKLe.length.toString());
+        arrayMoKLe.removeWhere((item) => item['tem'][0] == attrib);
+        print("After removing arrayMoKLe list : " + arrayMoKLe.toString());
+        print("arrayMoKLe list after qty: " + arrayMoKLe.length.toString());
+      }
+      Navigator.pop(context, true);
+      print("Yo replay klike");
+      fraz = "";
+      setState(() {
+        lives = 5;
+        statusTyping = 'a';
+        fraz = FomateTeks.rekipereTeks(arrayMoKLe, fraz);
+        moChwazi = fraz.split("&")[0];
+        infoChwazi = fraz.split("&")[1];
+        rechechMo = fraz.split("&")[2];
+        winning = fraz.split("&")[3];
+        losing = fraz.split("&")[4];
+        letPouMosa.clear();
+      });
+    }
   }
 
   Widget touche(String lt, callback, bool freeze, int lives) {
@@ -94,14 +129,14 @@ class _HangmanState extends State<Hangman> {
               padding: MaterialStateProperty.all<EdgeInsets>(
                   const EdgeInsets.all(0)),
               backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromARGB(255, 255, 255, 255)),
+                  const Color.fromARGB(255, 255, 255, 255)),
               foregroundColor: MaterialStateProperty.all<Color>(
                   const Color.fromARGB(255, 0, 0, 0)),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(7.0),
                       side: const BorderSide(
-                          color: Color.fromARGB(255, 173, 173, 173))))),
+                          color: Color.fromRGBO(173, 173, 173, 1))))),
           onPressed: callback);
     } else if (lt == "CROSS") {
       return TextButton(
@@ -134,7 +169,7 @@ class _HangmanState extends State<Hangman> {
               backgroundColor: MaterialStateProperty.all<Color>(
                   const Color.fromARGB(255, 255, 255, 255)),
               foregroundColor: MaterialStateProperty.all<Color>(
-                  const Color.fromARGB(255, 0, 0, 0)),
+                  Color.fromARGB(255, 0, 0, 0)),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(7.0),
@@ -189,7 +224,7 @@ class _HangmanState extends State<Hangman> {
               ),
               ListTile(
                   onTap: () {
-                    callbackReplay();
+                    callbackReplay("loose");
                   },
                   title: const Text(
                     "Rejwe",
@@ -218,7 +253,7 @@ class _HangmanState extends State<Hangman> {
         body: Column(
           children: <Widget>[
             Container(
-              color: Color(0XFFFAFAFA),
+              color: const Color(0XFFFAFAFA),
               padding: const EdgeInsets.only(top: 40.0, bottom: 100.0),
               width: double.infinity,
               child: Column(
@@ -231,13 +266,18 @@ class _HangmanState extends State<Hangman> {
                   ),
                   // Container(
                   //   child: ElevatedButton(
-                  //     child: Text("Boto"),
+                  //     child: Text("Testay"),
                   //     onPressed: () {
                   //       Navigator.push(
                   //           context,
                   //           MaterialPageRoute(
                   //               builder: (context) => EnfoScreen(
-                  //                   statusInfo: "winner", vies: lives)));
+                  //                     statusInfo: "winner",
+                  //                     losing: 'ti test loose',
+                  //                     winning: "ti test win",
+                  //                     vies: lives,
+                  //                     callbackFunction: () {},
+                  //                   )));
                   //     },
                   //   ),
                   // ),
@@ -281,7 +321,7 @@ class _HangmanState extends State<Hangman> {
                             padding: MaterialStateProperty.all<EdgeInsets>(
                                 const EdgeInsets.all(0)),
                             backgroundColor: MaterialStateProperty.all<Color>(
-                                Color.fromARGB(255, 255, 255, 255)),
+                                const Color.fromARGB(255, 255, 255, 255)),
                             foregroundColor: MaterialStateProperty.all<Color>(
                                 const Color.fromARGB(255, 0, 0, 0)),
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -594,7 +634,21 @@ class _HangmanState extends State<Hangman> {
                       lives),
                   touche(
                       'CROSS',
-                      () => {print("CROSS choosed in the callback")},
+                      () => {
+                            //load eraser
+                            if (letPouMosa.isNotEmpty)
+                              {
+                                print(eraseLetter(moChwazi, letPouMosa.last)),
+                                setState(() => {
+                                      moChwazi =
+                                          eraseLetter(moChwazi, letPouMosa.last)
+                                    }),
+                                letPouMosa.removeLast(),
+                                print("denye mo pou affiche " +
+                                    letPouMosa.toString()),
+                                print("CROSS choosed in the callback")
+                              }
+                          },
                       false,
                       lives),
                 ],
@@ -607,7 +661,7 @@ class _HangmanState extends State<Hangman> {
   void puppetMaster(ltd, context) {
     var mlor = "";
     setState(() => freezeBtn = true);
-    Timer(const Duration(seconds: 1), () {
+    Timer(const Duration(microseconds: 10000), () {
       setState(() => freezeBtn = false);
     });
     mlor = ParseText(moChwazi, rechechMo, ltd, context);
@@ -622,19 +676,26 @@ class _HangmanState extends State<Hangman> {
 
     if (statusTyping == 'f') {
       if (lives == 1 || lives < 1) {
-        statusTyping = 'f';
+        // statusTyping = 'f';
         pedi(context);
         setState(() => lives = 0);
         return;
       } else if (lives > 1) {
-        Timer(const Duration(seconds: 1), () {
+        Timer(const Duration(microseconds: 600), () {
+          setState(() => {
+                lives--,
+              });
+        });
+        Timer(const Duration(seconds: 5), () {
           setState(() => {
                 statusTyping = 'a',
-                lives--,
               });
         });
       }
     } else if (statusTyping == 't') {
+      //get the letter and save it
+      letPouMosa.add(ltd);
+      print("Men denye let tape yo..." + letPouMosa.toString());
       Timer(const Duration(seconds: 1), () {
         setState(() => statusTyping = 'a');
       });
@@ -657,7 +718,7 @@ class _HangmanState extends State<Hangman> {
     }
   }
 
-  static String pedi(context) {
+  String pedi(context) {
     print("Ou pedu ui bro");
     Navigator.push(
         context,
@@ -667,7 +728,9 @@ class _HangmanState extends State<Hangman> {
                 vies: 0,
                 losing: losing,
                 winning: winning,
-                callbackFunction: () {})));
+                callbackFunction: () {
+                  callbackReplay("loose");
+                })));
     return "";
   }
 
@@ -677,13 +740,6 @@ class _HangmanState extends State<Hangman> {
     var tmptesksTab = search.split("");
     thisletter = letter;
     var tmoin = "f";
-    // print("search");
-    // print(search.length);
-    // print("search.split");
-
-    // for (var i = 0; i < tmptesksTab.length; i++) {
-    //   tmptesksTab.add(word[i]);
-    // }
     print("tmptesksTab");
     print(tmptesksTab);
     print("tmptesksTab  " + tmptesksTab.length.toString());
@@ -712,15 +768,29 @@ class _HangmanState extends State<Hangman> {
       if (!tmpKrypt.contains("*")) {
         tmoin = 'd';
         print("Completed no letter to complete..");
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => EnfoScreen(
-                    statusInfo: "winner",
-                    vies: lives,
-                    losing: losing,
-                    winning: winning,
-                    callbackFunction: callbackReplay)));
+        if (arrayMoKLe.length - 1 < 1) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MizajouScreen(
+                        vies: lives,
+                        winning: winning,
+                      )));
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => EnfoScreen(
+                        statusInfo: "winner",
+                        vies: lives,
+                        losing: losing,
+                        winning: winning,
+                        callbackFunction: () {
+                          callbackReplay(ro);
+                        },
+                      )));
+        }
+
         // context
       }
       print("Find the bottle");
@@ -730,19 +800,18 @@ class _HangmanState extends State<Hangman> {
       return ro + "&" + tmoin;
     }
   }
-}
 
-class MizajouScreen extends StatelessWidget {
-  const MizajouScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Bro")),
-      body: Container(
-        child:
-            Text("Domaj brother eskeuw vle reset oubyen wap tan lot version"),
-      ),
-    );
+  String eraseLetter(String word, String letter) {
+    var tmpKrypt = word.split("");
+    for (var i = 0; i < tmpKrypt.length; i++) {
+      if (tmpKrypt[i] == letter) {
+        tmpKrypt[i] = "*";
+      }
+    }
+    var ro = "";
+    for (var i = 0; i < tmpKrypt.length; i++) {
+      ro += tmpKrypt[i];
+    }
+    return ro;
   }
 }
