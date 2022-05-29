@@ -3,14 +3,14 @@ import "package:flutter/material.dart";
 class MizajouScreen extends StatelessWidget {
   final int vies;
   final String winning;
-  // final Function callbackFunction;
+  final Function callbackRekomanse;
 
-  const MizajouScreen({
-    Key? key,
-    required this.winning,
-    required this.vies,
-    // required this.callbackFunction
-  }) : super(key: key);
+  const MizajouScreen(
+      {Key? key,
+      required this.winning,
+      required this.vies,
+      required this.callbackRekomanse})
+      : super(key: key);
 
   List<Widget> countStars(int count) {
     List<Widget> starsData = [];
@@ -90,7 +90,8 @@ class MizajouScreen extends StatelessWidget {
                     GestureDetector(
                         onTap: () {
                           print(" Reset win clicked");
-                          // callbackFunction();
+                          // backupArrowMoKle
+                          callbackRekomanse();
                         },
                         child: Container(
                           width: 100,

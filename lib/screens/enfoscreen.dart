@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:flutter/services.dart';
 
 // hide BoxDecoration, BoxShadow
 // import "package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart";
@@ -121,7 +122,9 @@ class EnfoScreen extends StatelessWidget {
                     const SizedBox(),
                     GestureDetector(
                         onTap: () {
-                          print("Kite clicked");
+                          // print("Kite clicked");
+                          SystemChannels.platform
+                              .invokeMethod('SystemNavigator.pop');
                         },
                         child: Container(
                           width: 100,
@@ -228,7 +231,9 @@ class EnfoScreen extends StatelessWidget {
                     SizedBox(),
                     GestureDetector(
                         onTap: () {
-                          print("Kite clicked");
+                          // print("Kite clicked");
+                          SystemChannels.platform
+                              .invokeMethod('SystemNavigator.pop');
                         },
                         child: Container(
                           width: 100,

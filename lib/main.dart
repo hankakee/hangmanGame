@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
-import "dart:io";
 import 'dart:async';
 import 'utils/fomate.dart';
 import 'screens/enfoscreen.dart';
@@ -64,6 +63,7 @@ List arrayMoKLe = [
   //   ]
   // }
 ];
+List backupArrowMoKle = List.from(arrayMoKLe);
 
 class Hangman extends StatefulWidget {
   const Hangman({Key? key}) : super(key: key);
@@ -90,19 +90,23 @@ class _HangmanState extends State<Hangman> {
   callbackReplay(attrib) {
     print(attrib);
     if (arrayMoKLe.isEmpty) {
-      print("So its done go to mizajouscreen brothers");
+      // print("So its done go to mizajouscreen brother");
     } else {
       if (attrib != "loose") {
         print("Mo gagnan bro:" + attrib);
         // cheche mo gagnan an epi efasel
         // arrayMoKLe
-        print('finding this bro...');
-        print("arrayMoKLe list : " + arrayMoKLe.toString());
-        print("arrayMoKLe list qty: " + arrayMoKLe.length.toString());
+        // print('finding this bro...');
+        // print("arrayMoKLe list : " + arrayMoKLe.toString());
+        // print("arrayMoKLe list qty: " + arrayMoKLe.length.toString());
+        // print("Men backup la before  bro:  " + backupArrowMoKle.toString());
         arrayMoKLe.removeWhere((item) => item['tem'][0] == attrib);
-        print("After removing arrayMoKLe list : " + arrayMoKLe.toString());
-        print("arrayMoKLe list after qty: " + arrayMoKLe.length.toString());
+        // print("After removing arrayMoKLe list : " + arrayMoKLe.toString());
+        // print("arrayMoKLe list after qty: " + arrayMoKLe.length.toString());
+        // print("Men backup la bro:  " + backupArrowMoKle.toString());
       }
+      // print("Men backup la before  bro:  " + backupArrowMoKle.toString());
+      // print("Men backup la bro:  " + backupArrowMoKle.toString());
       Navigator.pop(context, true);
       print("Yo replay klike");
       fraz = "";
@@ -242,7 +246,6 @@ class _HangmanState extends State<Hangman> {
                   onTap: () {
                     print("soti");
                     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                    // _getOutOfApp();
                   },
                   title: const Text("Kite",
                       style: TextStyle(
@@ -702,21 +705,7 @@ class _HangmanState extends State<Hangman> {
     }
   }
 
-  void _getOutOfApp() {
-    if (Platform.isIOS) {
-      try {
-        exit(0);
-      } catch (e) {
-        SystemNavigator.pop();
-      }
-    } else {
-      try {
-        SystemNavigator.pop(); // sometimes it cant exit app
-      } catch (e) {
-        exit(0);
-      }
-    }
-  }
+
 
   String pedi(context) {
     print("Ou pedu ui bro");
@@ -775,6 +764,10 @@ class _HangmanState extends State<Hangman> {
                   builder: (context) => MizajouScreen(
                         vies: lives,
                         winning: winning,
+                        callbackRekomanse: () {
+                          arrayMoKLe = List.from(backupArrowMoKle);
+                          callbackReplay("loose");
+                        },
                       )));
         } else {
           Navigator.push(
