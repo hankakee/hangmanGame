@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
+import 'package:hangmangame/screens/edscreen.dart';
 import 'dart:async';
 import 'utils/fomate.dart';
 import 'screens/enfoscreen.dart';
@@ -27,8 +28,8 @@ List<String> letPouMosa = [];
 List arrayMoKLe = [
   {
     "id": 20,
-    "tem": ["BONSWA", "Se yon mo ki itilize pou salye moun le swa..."],
-    "info": ["Wi se BONSWA yo di le swa...", "Domaj mo sa te komanse a B..."]
+    "tem": ["BONJOU", "Se yon mo ki itilize pou salye moun le maten..."],
+    "info": ["Wi se BONJOU yo di le maten...", "Domaj mo sa te komanse a B..."]
   },
   {
     "id": 21,
@@ -63,7 +64,45 @@ List arrayMoKLe = [
   //   ]
   // }
 ];
-List backupArrowMoKle = List.from(arrayMoKLe);
+List backupArrowMoKle = [
+  {
+    "id": 20,
+    "tem": ["BONJOU", "Se yon mo ki itilize pou salye moun le maten..."],
+    "info": ["Wi se BONJOU yo di le maten...", "Domaj mo sa te komanse a B..."]
+  },
+  {
+    "id": 21,
+    "tem": ["LEKOL", "Youn nan pi bon kote ki ka enstwi moun..."],
+    "info": [
+      "Wi LEKOL se youn nan kote ki ka enstwi moun...",
+      "Domaj mo sa te komanse a L..."
+    ]
+  },
+  // {
+  //   "id": 22,
+  //   "tem": ["SOULYE", "Itil pou proteje pye'w..."],
+  //   "info": [
+  //     "Wi soulye Itil pou proteje pye'w...",
+  //     "Domaj mo sa te komanse a L..."
+  //   ]
+  // },
+  // {
+  //   "id": 23,
+  //   "tem": ["LAJAN", "Echanjab pou preske tout bagay"],
+  //   "info": [
+  //     "Wi lajan echanjab pou preske tout bagay...",
+  //     "Domaj mo sa te komanse a L..."
+  //   ]
+  // },
+  // {
+  //   "id": 24,
+  //   "tem": ["Zaboka", "Ka akonpaye preske tout manje..."],
+  //   "info": [
+  //     "Wi zaboka ka akonpaye preske tout manje...",
+  //     "Domaj mo sa te komanse a Z..."
+  //   ]
+  // }
+];
 
 class Hangman extends StatefulWidget {
   const Hangman({Key? key}) : super(key: key);
@@ -88,12 +127,12 @@ class _HangmanState extends State<Hangman> {
   }
 
   callbackReplay(attrib) {
-    print(attrib);
+    // print(attrib);
     if (arrayMoKLe.isEmpty) {
       // print("So its done go to mizajouscreen brother");
     } else {
       if (attrib != "loose") {
-        print("Mo gagnan bro:" + attrib);
+        // print("Mo gagnan bro:" + attrib);
         // cheche mo gagnan an epi efasel
         // arrayMoKLe
         // print('finding this bro...');
@@ -108,7 +147,7 @@ class _HangmanState extends State<Hangman> {
       // print("Men backup la before  bro:  " + backupArrowMoKle.toString());
       // print("Men backup la bro:  " + backupArrowMoKle.toString());
       Navigator.pop(context, true);
-      print("Yo replay klike");
+      // print("Yo replay klike");
       fraz = "";
       setState(() {
         lives = 5;
@@ -237,6 +276,10 @@ class _HangmanState extends State<Hangman> {
                   )),
               ListTile(
                   onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EdScreen()));
                     print("Ed klike");
                   },
                   title: const Text("Ed",
@@ -244,7 +287,7 @@ class _HangmanState extends State<Hangman> {
                           fontWeight: FontWeight.bold, fontSize: 20.0))),
               ListTile(
                   onTap: () {
-                    print("soti");
+                    print("soti hangman tile");
                     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                   },
                   title: const Text("Kite",
@@ -704,8 +747,6 @@ class _HangmanState extends State<Hangman> {
       });
     }
   }
-
-
 
   String pedi(context) {
     print("Ou pedu ui bro");
