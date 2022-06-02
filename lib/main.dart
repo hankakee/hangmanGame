@@ -39,30 +39,30 @@ List arrayMoKLe = [
       "Domaj mo sa te komanse a L..."
     ]
   },
-  // {
-  //   "id": 22,
-  //   "tem": ["SOULYE", "Itil pou proteje pye'w..."],
-  //   "info": [
-  //     "Wi soulye Itil pou proteje pye'w...",
-  //     "Domaj mo sa te komanse a L..."
-  //   ]
-  // },
-  // {
-  //   "id": 23,
-  //   "tem": ["LAJAN", "Echanjab pou preske tout bagay"],
-  //   "info": [
-  //     "Wi lajan echanjab pou preske tout bagay...",
-  //     "Domaj mo sa te komanse a L..."
-  //   ]
-  // },
-  // {
-  //   "id": 24,
-  //   "tem": ["Zaboka", "Ka akonpaye preske tout manje..."],
-  //   "info": [
-  //     "Wi zaboka ka akonpaye preske tout manje...",
-  //     "Domaj mo sa te komanse a Z..."
-  //   ]
-  // }
+  {
+    "id": 22,
+    "tem": ["SOULYE", "Itil pou proteje pye'w..."],
+    "info": [
+      "Wi soulye Itil pou proteje pye'w...",
+      "Domaj mo sa te komanse a L..."
+    ]
+  },
+  {
+    "id": 23,
+    "tem": ["LAJAN", "Echanjab pou preske tout bagay"],
+    "info": [
+      "Wi lajan echanjab pou preske tout bagay...",
+      "Domaj mo sa te komanse a L..."
+    ]
+  },
+  {
+    "id": 24,
+    "tem": ["ZABOKA", "Ka akonpaye preske tout manje..."],
+    "info": [
+      "Wi Zaboka ka akonpaye preske tout manje...",
+      "Domaj mo sa te komanse a Z..."
+    ]
+  }
 ];
 List backupArrowMoKle = [
   {
@@ -78,30 +78,30 @@ List backupArrowMoKle = [
       "Domaj mo sa te komanse a L..."
     ]
   },
-  // {
-  //   "id": 22,
-  //   "tem": ["SOULYE", "Itil pou proteje pye'w..."],
-  //   "info": [
-  //     "Wi soulye Itil pou proteje pye'w...",
-  //     "Domaj mo sa te komanse a L..."
-  //   ]
-  // },
-  // {
-  //   "id": 23,
-  //   "tem": ["LAJAN", "Echanjab pou preske tout bagay"],
-  //   "info": [
-  //     "Wi lajan echanjab pou preske tout bagay...",
-  //     "Domaj mo sa te komanse a L..."
-  //   ]
-  // },
-  // {
-  //   "id": 24,
-  //   "tem": ["Zaboka", "Ka akonpaye preske tout manje..."],
-  //   "info": [
-  //     "Wi zaboka ka akonpaye preske tout manje...",
-  //     "Domaj mo sa te komanse a Z..."
-  //   ]
-  // }
+  {
+    "id": 22,
+    "tem": ["SOULYE", "Itil pou proteje pye'w..."],
+    "info": [
+      "Wi soulye Itil pou proteje pye'w...",
+      "Domaj mo sa te komanse a L..."
+    ]
+  },
+  {
+    "id": 23,
+    "tem": ["LAJAN", "Echanjab pou preske tout bagay"],
+    "info": [
+      "Wi lajan echanjab pou preske tout bagay...",
+      "Domaj mo sa te komanse a L..."
+    ]
+  },
+  {
+    "id": 24,
+    "tem": ["ZABOKA", "Ka akonpaye preske tout manje..."],
+    "info": [
+      "Wi zaboka ka akonpaye preske tout manje...",
+      "Domaj mo sa te komanse a Z..."
+    ]
+  }
 ];
 
 class Hangman extends StatefulWidget {
